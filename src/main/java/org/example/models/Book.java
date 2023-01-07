@@ -30,7 +30,7 @@ public class Book {
         return id;
     }
 
-    public void setId(int id) {
+    public void setBook_id(int id) {
         this.id = id;
     }
 

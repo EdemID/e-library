@@ -3,7 +3,7 @@ package org.example.controllers;
 import org.example.dao.BookDAO;
 import org.example.dao.PersonDAO;
 import org.example.models.Book;
-import org.example.models.Book;
+import org.example.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +18,12 @@ import javax.validation.Valid;
 public class BooksController {
 
     private final BookDAO bookDAO;
+    private final PersonDAO personDAO;
 
     @Autowired
-    public BooksController(BookDAO bookDAO) {
+    public BooksController(BookDAO bookDAO, PersonDAO personDAO) {
         this.bookDAO = bookDAO;
+        this.personDAO = personDAO;
     }
 
     @GetMapping()
@@ -31,8 +33,11 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id, Model model,
+                       @ModelAttribute("person") Person person) {
         model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("people", personDAO.index());
+
         return "books/show";
     }
 
@@ -71,5 +76,13 @@ public class BooksController {
     public String delete(@PathVariable("id") int id) {
         bookDAO.delete(id);
         return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/add")
+    public String assignBook(@ModelAttribute("person")Person person,
+                             @PathVariable("id") int id) {
+        System.out.println(person.getPerson_id());
+        bookDAO.assignBook(id, person.getPerson_id());
+        return "redirect:/books/{id}";
     }
 }

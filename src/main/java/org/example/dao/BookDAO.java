@@ -32,7 +32,7 @@ public class BookDAO {
     }
 
     public void update(int id, Book updatedBook) {
-        jdbcTemplate.update("UPDATE Book SET person_id=null, name=?, age=?, year=? WHERE book_id=?",
+        jdbcTemplate.update("UPDATE Book SET person_id=null, name=?, author=?, year=? WHERE book_id=?",
                 updatedBook.getName(), updatedBook.getAuthor(), updatedBook.getYear(), id);
     }
 
@@ -42,5 +42,9 @@ public class BookDAO {
 
     public void deleteReference(int id) {
         jdbcTemplate.update("UPDATE book SET person_id = null WHERE person_id =?", id);
+    }
+
+    public void assignBook(int book_id, int person_id) {
+        jdbcTemplate.update("UPDATE book Set person_id=? where book_id=?", person_id, book_id);
     }
 }

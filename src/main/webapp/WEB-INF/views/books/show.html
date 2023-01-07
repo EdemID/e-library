@@ -9,6 +9,22 @@
 <p th:text="${'Year: ' + book.getYear()}">VALUE</p>
 <p th:text="${book.getId()}">VALUE</p>
 
+<form th:method="PATCH" th:action="@{/books/{id}/add(id=${book.getId()})}">
+    <label for="person"> Select person </label>
+
+    <select th:object="${person}" th:field="*{person_id}" id="person">
+        <option th:each="person : ${people}"
+                th:value="${person.getPerson_id()}"
+                th:text="${person.getName()}">
+            значение value отправляется на сервер, а text виден пользователю
+        </option>
+    </select>
+    <input type="submit" value="Assign a book" />
+</form>
+
+<br/>
+<hr/>
+
 <a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit</a>
 
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
