@@ -1,10 +1,11 @@
 package org.example.dao;
 
+import org.example.models.Book;
+import org.example.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.example.models.Person;
 
 import java.util.List;
 
@@ -13,10 +14,12 @@ import java.util.List;
 public class PersonDAO {
 
     private final JdbcTemplate jdbcTemplate;
+    private final BookDAO bookDAO;
 
     @Autowired
-    public PersonDAO(JdbcTemplate jdbcTemplate) {
+    public PersonDAO(JdbcTemplate jdbcTemplate, BookDAO bookDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.bookDAO = bookDAO;
     }
 
     public List<Person> index() {
@@ -24,8 +27,11 @@ public class PersonDAO {
     }
 
     public Person show(int id) {
-        return jdbcTemplate.query("SELECT * FROM Person WHERE person_id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
+        Person person = jdbcTemplate.query("SELECT * FROM Person WHERE person_id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
                 .stream().findAny().orElse(null);
+        person.setBooks(jdbcTemplate.query("select * from person join book on person.person_id = book.person_id where book.person_id = ?;", new Object[]{id}, new BeanPropertyRowMapper<>(Book.class)));
+
+        return person;
     }
 
     public void save(Person person) {
@@ -38,6 +44,7 @@ public class PersonDAO {
     }
 
     public void delete(int id) {
+        bookDAO.deleteReference(id);
         jdbcTemplate.update("DELETE FROM Person WHERE person_id=?", id);
     }
 }

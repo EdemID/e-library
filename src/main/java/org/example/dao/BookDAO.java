@@ -1,7 +1,6 @@
 package org.example.dao;
 
 import org.example.models.Book;
-import org.example.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -41,4 +40,7 @@ public class BookDAO {
         jdbcTemplate.update("DELETE FROM Book WHERE book_id=?", id);
     }
 
+    public void deleteReference(int id) {
+        jdbcTemplate.update("UPDATE book SET person_id = null WHERE person_id =?", id);
+    }
 }
