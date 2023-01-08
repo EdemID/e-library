@@ -11,14 +11,16 @@
 
 <div th:if="${#lists.isEmpty(person.getBooks())}">
     <p>Person did not take a single book</p>>
+    <hr/>
 </div>
 
 <br/>
-
-<div th:each="book : ${person.getBooks()}">
+<b>Books:</b>
+<br/>
+<table th:each="book : ${person.getBooks()}">
     <a th:href="@{/books/{id}(id=${book.getId()})}"
        th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
-</div>
+</table>
 
 <br/>
 <hr/>
