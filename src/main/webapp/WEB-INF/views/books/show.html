@@ -3,24 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Show</title>
+
+    <style>
+        .leftstr, .rightstr {
+            float: left; /* Обтекание справа */
+        }
+    </style>
 </head>
 <body>
 <p th:text="${book.getName() + ', ' + book.getAuthor()}">VALUE</p>
 <p th:text="${'Year: ' + book.getYear()}">VALUE</p>
 <p th:text="${book.getId()}">VALUE</p>
 
-<form th:method="PATCH" th:action="@{/books/{id}/add(id=${book.getId()})}">
-    <label for="person"> Select person </label>
+<div th:if="${namePerson == null}">
+    <p>This book is free. who should it be assigned to?</p>
+    <br/>
+    <form th:method="PATCH" th:action="@{/books/{id}/add(id=${book.getId()})}">
+        <label for="person"> Select person </label>
 
-    <select th:object="${person}" th:field="*{person_id}" id="person">
-        <option th:each="person : ${people}"
-                th:value="${person.getPerson_id()}"
-                th:text="${person.getName()}">
-            значение value отправляется на сервер, а text виден пользователю
-        </option>
-    </select>
-    <input type="submit" value="Assign a book" />
-</form>
+        <select th:object="${person}" th:field="*{person_id}" id="person">
+            <option th:each="person : ${people}"
+                    th:value="${person.getPerson_id()}"
+                    th:text="${person.getName()}">
+                значение value отправляется на сервер, а text виден пользователю
+            </option>
+        </select>
+        <input type="submit" value="Assign a book" />
+    </form>
+</div>
+<!--<p>has the book</p>-->
+<div th:unless="${namePerson == null}">
+    <p class="leftstr" th:text="${namePerson}">Name person</p>
+    <p class="rightstr">&nbsp has the book</p>
+    <div style="clear: left"></div>
+
+    <br/>
+
+    <form th:method="GET" th:action="@{/books/{id}/return(id=${book.getId()})}" target="_blank">
+        <button>Return the book</button>
+    </form>
+</div>
 
 <br/>
 <hr/>
