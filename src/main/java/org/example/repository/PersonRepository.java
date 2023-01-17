@@ -14,5 +14,4 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     List<Person> findByNameOrderByAge(String name);
 
     List<Person> findByNameStartingWith(String startingWith);
-
 }

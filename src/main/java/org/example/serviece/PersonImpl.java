@@ -35,14 +35,19 @@ public class PersonImpl {
     }
 
     @Transactional
-    public Person update(Person updatedPerson) {
-
+    public Person update(Integer id, Person updatedPerson) {
+        updatedPerson.setId(id);
         return repository.save(updatedPerson);
     }
 
     @Transactional
     public void delete(Person person) {
         repository.delete(person);
+    }
+
+    @Transactional
+    public void delete(Integer id) {
+        repository.deleteById(id);
     }
 
     public List<Person> findByName(String name) {
