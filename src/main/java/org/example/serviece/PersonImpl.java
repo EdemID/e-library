@@ -1,7 +1,7 @@
 package org.example.serviece;
 
 import org.example.models.Person;
-import org.example.repositorie.PersonRepository;
+import org.example.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
