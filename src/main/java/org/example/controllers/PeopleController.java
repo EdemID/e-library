@@ -33,7 +33,8 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", personService.findById(id));
+        model.addAttribute("person", personService.findByIdWithBooks(id));
+
         return "people/show";
     }
 

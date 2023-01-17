@@ -2,6 +2,7 @@ package org.example.serviece;
 
 import org.example.models.Person;
 import org.example.repository.PersonRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +25,19 @@ public class PersonImpl {
         return repository.findAll();
     }
 
-    public Person findById(Integer id) {
+    public Person findById(int id) {
         Optional<Person> foundPerson = repository.findById(id);
-        return foundPerson.orElse(null);
+        return foundPerson.orElseThrow(RuntimeException::new);
+    }
+
+    public Person findByIdWithBooks(int id) {
+        Optional<Person> foundPerson = repository.findById(id);
+        Person person = null;
+        if (foundPerson.isPresent()) {
+            person = foundPerson.get();
+            Hibernate.initialize(person.getBooks());
+        }
+        return person;
     }
 
     @Transactional
@@ -35,7 +46,7 @@ public class PersonImpl {
     }
 
     @Transactional
-    public Person update(Integer id, Person updatedPerson) {
+    public Person update(int id, Person updatedPerson) {
         updatedPerson.setId(id);
         return repository.save(updatedPerson);
     }
@@ -46,7 +57,7 @@ public class PersonImpl {
     }
 
     @Transactional
-    public void delete(Integer id) {
+    public void delete(int id) {
         repository.deleteById(id);
     }
 

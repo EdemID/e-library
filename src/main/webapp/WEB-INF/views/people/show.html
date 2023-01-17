@@ -14,16 +14,17 @@
     <hr/>
 </div>
 
-<br/>
-<b>Books:</b>
-<br/>
-<table th:each="book : ${person.getBooks()}">
-    <a th:href="@{/books/{id}(id=${book.getId()})}"
-       th:text="${book.getBookName() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}">book</a>
-</table>
+<div th:unless="${#lists.isEmpty(person.getBooks())}">
+    <br/>
+    <b>Books:</b>
+    <br/>
+    <table th:each="book : ${person.getBooks()}">
+        <a th:href="@{/books/{id}(id=${book.getId()})}"
+           th:text="${book.getBookName() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}">book</a>
+    </table>
 
-<br/>
-<hr/>
+    <hr/>
+</div>>
 
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
 
