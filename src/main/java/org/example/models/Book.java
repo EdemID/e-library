@@ -51,7 +51,7 @@ public class Book {
         return id;
     }
 
-    public void setBook_id(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -77,6 +77,14 @@ public class Book {
 
     public void setYearOfPublication(Date year) {
         this.yearOfPublication = year;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     @Override

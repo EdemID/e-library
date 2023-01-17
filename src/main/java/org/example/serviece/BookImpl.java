@@ -35,13 +35,18 @@ public class BookImpl {
     }
 
     @Transactional
-    public Book update(Book updatedBook) {
-
+    public Book update(Integer id, Book updatedBook) {
+        updatedBook.setId(id);
         return repository.save(updatedBook);
     }
 
     @Transactional
     public void delete(Book book) {
         repository.delete(book);
+    }
+
+    @Transactional
+    public void delete(Integer id) {
+        repository.deleteById(id);
     }
 }
