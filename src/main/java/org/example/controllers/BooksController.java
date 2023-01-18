@@ -78,17 +78,17 @@ public class BooksController {
         return "redirect:/books";
     }
 
-//    @PatchMapping("/{id}/add")
-//    public String assignBook(@ModelAttribute("person")Person person,
-//                             @PathVariable("id") int id) {
-//        bookService.assignBook(id, person.getId());
-//        return "redirect:/books/{id}";
-//    }
-//
-//    @GetMapping("/{id}/return")
-//    public String returnBook(@PathVariable("id") int id) {
-//        bookService.returnBook(id);
-//
-//        return "redirect:/books/{id}";
-//    }
+    @PatchMapping("/{id}/add")
+    public String assignBook(@ModelAttribute("person")Person person,
+                             @PathVariable("id") int id) {
+        bookService.assignBook(id, person);
+        return "redirect:/books/{id}";
+    }
+
+    @GetMapping("/{id}/return")
+    public String returnBook(@PathVariable("id") int id) {
+        bookService.returnBook(id);
+
+        return "redirect:/books/{id}";
+    }
 }

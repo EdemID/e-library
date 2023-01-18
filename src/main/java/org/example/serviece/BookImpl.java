@@ -1,6 +1,7 @@
 package org.example.serviece;
 
 import org.example.models.Book;
+import org.example.models.Person;
 import org.example.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,9 @@ public class BookImpl {
         return repository.findAll();
     }
 
-    public Book findById(Integer id) {
+    public Book findById(int id) {
         Optional<Book> foundBook = repository.findById(id);
-        return foundBook.orElse(null);
+        return foundBook.orElseThrow(RuntimeException::new);
     }
 
     @Transactional
@@ -35,7 +36,7 @@ public class BookImpl {
     }
 
     @Transactional
-    public Book update(Integer id, Book updatedBook) {
+    public Book update(int id, Book updatedBook) {
         updatedBook.setId(id);
         return repository.save(updatedBook);
     }
@@ -46,7 +47,23 @@ public class BookImpl {
     }
 
     @Transactional
-    public void delete(Integer id) {
+    public void delete(int id) {
         repository.deleteById(id);
+    }
+
+    @Transactional
+    public void assignBook(int id, Person person) {
+        Book book = findById(id);
+        book.setOwner(person);
+        System.out.println(book.getOwner());
+        save(book);
+    }
+
+    @Transactional
+    public void returnBook(int id) {
+        Book book = findById(id);
+        book.setOwner(null);
+
+        save(book);
     }
 }

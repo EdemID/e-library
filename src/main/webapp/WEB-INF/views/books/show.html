@@ -39,7 +39,7 @@
 
     <br/>
 
-    <form th:method="GET" th:action="@{/books/{id}/return(id=${book.getId()})}" target="_blank">
+    <form th:method="GET" th:action="@{/books/{id}/return(id=${book.getId()})}">
         <button>Return the book</button>
     </form>
 </div>
@@ -52,5 +52,6 @@
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
+
 </body>
 </html>
