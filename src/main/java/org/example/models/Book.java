@@ -1,11 +1,8 @@
 package org.example.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -24,12 +21,13 @@ public class Book {
     private String author;
 
     @Column(name = "year")
-    @Temporal(TemporalType.DATE)
-    //  TODO: создать спринг-валидатор для формата даты,
-    //  чтобы пользователю выходила красивая ошибка, если ввел неверно дату,
-    //  иначе спринг выдает свою ошибку
-    @DateTimeFormat(pattern = "dd/MM/yyyy") // дд/мм/гггг
-    private Date yearOfPublication;
+    private int yearOfPublication;
+
+//    @Temporal(TemporalType.DATE)
+//    //  TODO: создать спринг-валидатор для формата даты,
+//    //  чтобы пользователю выходила красивая ошибка, если ввел неверно дату,
+//    //  иначе спринг выдает свою ошибку
+//    @DateTimeFormat(pattern = "dd/MM/yyyy") // дд/мм/гггг
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
@@ -39,7 +37,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(int id, String bookName, String author, Date yearOfPublication, Person owner) {
+    public Book(int id, String bookName, String author, int yearOfPublication, Person owner) {
         this.id = id;
         this.bookName = bookName;
         this.author = author;
@@ -71,11 +69,11 @@ public class Book {
         this.author = author;
     }
 
-    public Date getYearOfPublication() {
+    public int getYearOfPublication() {
         return yearOfPublication;
     }
 
-    public void setYearOfPublication(Date year) {
+    public void setYearOfPublication(int year) {
         this.yearOfPublication = year;
     }
 

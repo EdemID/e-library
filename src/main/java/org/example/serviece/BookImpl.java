@@ -4,6 +4,8 @@ import org.example.models.Book;
 import org.example.models.Person;
 import org.example.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +24,9 @@ public class BookImpl {
     }
 
     public List<Book> findAll() {
-        return repository.findAll();
+        int page = 1;         // интересует 2 страница
+        int booksPerPage = 3; // по 3 книге на странице
+        return repository.findAll(PageRequest.of(page, booksPerPage, Sort.by("yearOfPublication", "bookName"))).getContent();
     }
 
     public Book findById(int id) {
