@@ -1,4 +1,4 @@
-package org.example.models;
+package org.example.model;
 
 import org.hibernate.annotations.Cascade;
 

@@ -1,7 +1,7 @@
 package org.example.serviece;
 
-import org.example.models.Book;
-import org.example.models.Person;
+import org.example.model.Book;
+import org.example.model.Person;
 import org.example.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,10 +23,27 @@ public class BookImpl {
         this.repository = repository;
     }
 
-    public List<Book> findAll() {
-        int page = 1;         // интересует 2 страница
-        int booksPerPage = 3; // по 3 книге на странице
-        return repository.findAll(PageRequest.of(page, booksPerPage, Sort.by("yearOfPublication", "bookName"))).getContent();
+    public List<Book> findAll(boolean isSortByYear) {
+        if (isSortByYear) {
+            return repository.findAll(Sort.by("yearOfPublication", "bookName"));
+        }
+        return repository.findAll();
+    }
+
+    public List<Book> findAll(Integer page, int booksPerPage, boolean isSortByYear) {
+        if (isSortByYear) {
+            return repository.findAll(PageRequest.of(page, booksPerPage, Sort.by("yearOfPublication", "bookName"))).getContent();
+        } else {
+            return repository.findAll(PageRequest.of(page, booksPerPage)).getContent();
+        }
+    }
+
+    public List<Book> findByBookNameStartsWith(String startsWith) {
+        if (startsWith.equals("")) {
+            return null;
+        } else {
+            return repository.findByBookNameStartsWith(startsWith);
+        }
     }
 
     public Book findById(int id) {

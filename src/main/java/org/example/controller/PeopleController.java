@@ -1,6 +1,6 @@
-package org.example.controllers;
+package org.example.controller;
 
-import org.example.models.Person;
+import org.example.model.Person;
 import org.example.serviece.BookImpl;
 import org.example.serviece.PersonImpl;
 import org.springframework.beans.factory.annotation.Autowired;
