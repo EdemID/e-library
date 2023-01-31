@@ -1,5 +1,6 @@
 package org.example.serviece;
 
+import org.example.exception.IncorrectParametersException;
 import org.example.model.Book;
 import org.example.model.Person;
 import org.example.repository.BookRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +32,7 @@ public class BookImpl {
         return repository.findAll();
     }
 
-    public List<Book> findAll(Integer page, int booksPerPage, boolean isSortByYear) {
+    public List<Book> findAll(Integer page, int booksPerPage, boolean isSortByYear) throws IncorrectParametersException {
         if (isSortByYear) {
             return repository.findAll(PageRequest.of(page, booksPerPage, Sort.by("yearOfPublication", "bookName"))).getContent();
         } else {
@@ -76,7 +78,8 @@ public class BookImpl {
     public void assignBook(int id, Person person) {
         Book book = findById(id);
         book.setOwner(person);
-        System.out.println(book.getOwner());
+        book.setBookAssignmentTimeToPerson(new Date());
+
         save(book);
     }
 
@@ -84,6 +87,8 @@ public class BookImpl {
     public void returnBook(int id) {
         Book book = findById(id);
         book.setOwner(null);
+        book.setBookAssignmentTimeToPerson(null);
+        book.setDelay(false);
 
         save(book);
     }

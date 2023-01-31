@@ -13,6 +13,7 @@
     <p>Person did not take a single book</p>>
     <hr/>
 </div>
+<!--<div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>-->
 
 <div th:unless="${#lists.isEmpty(person.getBooks())}">
     <br/>
@@ -20,9 +21,9 @@
     <br/>
     <table th:each="book : ${person.getBooks()}">
         <a th:href="@{/books/{id}(id=${book.getId()})}"
+           th:style="${book.isDelay() ? 'color:red;' : ''}"
            th:text="${book.getBookName() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}">book</a>
     </table>
-
     <hr/>
 </div>>
 

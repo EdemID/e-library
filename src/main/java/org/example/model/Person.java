@@ -19,6 +19,11 @@ public class Person {
     @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     private String name;
 
+//    @Temporal(TemporalType.DATE)
+//    //  TODO: создать спринг-валидатор для формата даты,
+//    //  чтобы пользователю выходила красивая ошибка, если ввел неверно дату,
+//    //  иначе спринг выдает свою ошибку
+//    @DateTimeFormat(pattern = "dd/MM/yyyy") // дд/мм/гггг
     @Min(value = 0, message = "Age should be greater than 0")
     private int age;
 

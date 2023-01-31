@@ -3,6 +3,7 @@ package org.example.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -23,11 +24,12 @@ public class Book {
     @Column(name = "year")
     private int yearOfPublication;
 
-//    @Temporal(TemporalType.DATE)
-//    //  TODO: создать спринг-валидатор для формата даты,
-//    //  чтобы пользователю выходила красивая ошибка, если ввел неверно дату,
-//    //  иначе спринг выдает свою ошибку
-//    @DateTimeFormat(pattern = "dd/MM/yyyy") // дд/мм/гггг
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "book_assignment_time_to_person")
+    private Date bookAssignmentTimeToPerson;
+
+    @Transient
+    private boolean isDelay = false;
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
@@ -37,11 +39,12 @@ public class Book {
     public Book() {
     }
 
-    public Book(int id, String bookName, String author, int yearOfPublication, Person owner) {
+    public Book(int id, String bookName, String author, int yearOfPublication, Date bookAssignmentTimeToPerson, Person owner) {
         this.id = id;
         this.bookName = bookName;
         this.author = author;
         this.yearOfPublication = yearOfPublication;
+        this.bookAssignmentTimeToPerson = bookAssignmentTimeToPerson;
         this.owner = owner;
     }
 
@@ -79,6 +82,22 @@ public class Book {
 
     public Person getOwner() {
         return owner;
+    }
+
+    public Date getBookAssignmentTimeToPerson() {
+        return bookAssignmentTimeToPerson;
+    }
+
+    public void setBookAssignmentTimeToPerson(Date bookAssignmentTimeToPerson) {
+        this.bookAssignmentTimeToPerson = bookAssignmentTimeToPerson;
+    }
+
+    public boolean isDelay() {
+        return isDelay;
+    }
+
+    public void setDelay(boolean delay) {
+        isDelay = delay;
     }
 
     public void setOwner(Person owner) {

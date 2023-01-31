@@ -2,6 +2,7 @@ package org.example.serviece;
 
 import org.example.model.Person;
 import org.example.repository.PersonRepository;
+import org.example.util.Examine;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,8 @@ public class PersonImpl {
         if (foundPerson.isPresent()) {
             person = foundPerson.get();
             Hibernate.initialize(person.getBooks());
+
+            Examine.delayInReturningBook(person.getBooks());
         }
         return person;
     }
