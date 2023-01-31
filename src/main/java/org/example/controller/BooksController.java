@@ -2,8 +2,8 @@ package org.example.controller;
 
 import org.example.model.Book;
 import org.example.model.Person;
-import org.example.serviece.BookImpl;
-import org.example.serviece.PersonImpl;
+import org.example.serviece.BookService;
+import org.example.serviece.PeopleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping("/books")
 public class BooksController {
 
-    private final BookImpl bookService;
-    private final PersonImpl personService;
+    private final BookService bookService;
+    private final PeopleService personService;
 
-    public BooksController(BookImpl bookService, PersonImpl personService) {
+    public BooksController(BookService bookService, PeopleService personService) {
         this.bookService = bookService;
         this.personService = personService;
     }
@@ -109,7 +109,7 @@ public class BooksController {
     }
 
     @PostMapping("/search")
-    public String search(Model model, @ModelAttribute("searchTerm") String searchTerm) {
+    public String makeSearch(Model model, @ModelAttribute("searchTerm") String searchTerm) {
         model.addAttribute("searchResults", bookService.findByBookNameStartsWith(searchTerm));
 
         return "/books/search";

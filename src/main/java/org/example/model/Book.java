@@ -26,10 +26,10 @@ public class Book {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "book_assignment_time_to_person")
-    private Date bookAssignmentTimeToPerson;
+    private Date tookAt;
 
     @Transient
-    private boolean isDelay = false;
+    private boolean isExpired = false;
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
@@ -39,12 +39,12 @@ public class Book {
     public Book() {
     }
 
-    public Book(int id, String bookName, String author, int yearOfPublication, Date bookAssignmentTimeToPerson, Person owner) {
+    public Book(int id, String bookName, String author, int yearOfPublication, Date tookAt, Person owner) {
         this.id = id;
         this.bookName = bookName;
         this.author = author;
         this.yearOfPublication = yearOfPublication;
-        this.bookAssignmentTimeToPerson = bookAssignmentTimeToPerson;
+        this.tookAt = tookAt;
         this.owner = owner;
     }
 
@@ -84,20 +84,20 @@ public class Book {
         return owner;
     }
 
-    public Date getBookAssignmentTimeToPerson() {
-        return bookAssignmentTimeToPerson;
+    public Date getTookAt() {
+        return tookAt;
     }
 
-    public void setBookAssignmentTimeToPerson(Date bookAssignmentTimeToPerson) {
-        this.bookAssignmentTimeToPerson = bookAssignmentTimeToPerson;
+    public void setTookAt(Date bookAssignmentTimeToPerson) {
+        this.tookAt = bookAssignmentTimeToPerson;
     }
 
-    public boolean isDelay() {
-        return isDelay;
+    public boolean isExpired() {
+        return isExpired;
     }
 
-    public void setDelay(boolean delay) {
-        isDelay = delay;
+    public void setExpired(boolean expired) {
+        isExpired = expired;
     }
 
     public void setOwner(Person owner) {

@@ -20,12 +20,16 @@
     <b>Books:</b>
     <br/>
     <table th:each="book : ${person.getBooks()}">
-        <a th:href="@{/books/{id}(id=${book.getId()})}"
-           th:style="${book.isDelay() ? 'color:red;' : ''}"
-           th:text="${book.getBookName() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}">book</a>
+        <tr>
+            <td>
+                <a th:href="@{/books/{id}(id=${book.getId()})}"
+                   th:style="${book.isExpired() ? 'color:red;' : ''}"
+                   th:text="${book.getBookName() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}">book</a>
+            </td>
+        </tr>
     </table>
     <hr/>
-</div>>
+</div>
 
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
 

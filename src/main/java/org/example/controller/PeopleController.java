@@ -1,8 +1,8 @@
 package org.example.controller;
 
 import org.example.model.Person;
-import org.example.serviece.BookImpl;
-import org.example.serviece.PersonImpl;
+import org.example.serviece.BookService;
+import org.example.serviece.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +16,11 @@ import javax.validation.Valid;
 @RequestMapping("/people")
 public class PeopleController {
 
-    private final PersonImpl personService;
-    private final BookImpl bookService;
+    private final PeopleService personService;
+    private final BookService bookService;
 
     @Autowired
-    public PeopleController(PersonImpl personService, BookImpl bookService) {
+    public PeopleController(PeopleService personService, BookService bookService) {
         this.personService = personService;
         this.bookService = bookService;
     }

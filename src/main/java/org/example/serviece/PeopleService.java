@@ -13,12 +13,12 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class PersonImpl {
+public class PeopleService {
 
     private final PersonRepository repository;
 
     @Autowired
-    public PersonImpl(PersonRepository repository) {
+    public PeopleService(PersonRepository repository) {
         this.repository = repository;
     }
 
@@ -36,8 +36,8 @@ public class PersonImpl {
         Person person = null;
         if (foundPerson.isPresent()) {
             person = foundPerson.get();
-            Hibernate.initialize(person.getBooks());
-
+            Hibernate.initialize(person.getBooks()); // для подзагрузки книг. необязательно,
+            // т.к. книги точно будут подзагружены - получение person и books в одной транзакции
             Examine.delayInReturningBook(person.getBooks());
         }
         return person;

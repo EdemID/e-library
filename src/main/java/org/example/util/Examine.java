@@ -16,8 +16,8 @@ public class Examine {
         Date output = Date.from(zdt.toInstant());
 
         for (Book book : books) {
-            if (book.getBookAssignmentTimeToPerson().before(output)) {
-                book.setDelay(true);
+            if (book.getTookAt().before(output)) {
+                book.setExpired(true);
             }
         }
     }

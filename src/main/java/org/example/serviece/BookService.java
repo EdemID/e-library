@@ -16,12 +16,12 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class BookImpl {
+public class BookService {
 
     private final BookRepository repository;
 
     @Autowired
-    public BookImpl(BookRepository repository) {
+    public BookService(BookRepository repository) {
         this.repository = repository;
     }
 
@@ -60,7 +60,10 @@ public class BookImpl {
 
     @Transactional
     public Book update(int id, Book updatedBook) {
+        Book bookToBeUpdated = repository.findById(id).get();
+
         updatedBook.setId(id);
+        updatedBook.setOwner(bookToBeUpdated.getOwner()); // чтобы не терялась связь
         return repository.save(updatedBook);
     }
 
@@ -78,18 +81,20 @@ public class BookImpl {
     public void assignBook(int id, Person person) {
         Book book = findById(id);
         book.setOwner(person);
-        book.setBookAssignmentTimeToPerson(new Date());
+        book.setTookAt(new Date());
 
         save(book);
     }
 
     @Transactional
     public void returnBook(int id) {
-        Book book = findById(id);
-        book.setOwner(null);
-        book.setBookAssignmentTimeToPerson(null);
-        book.setDelay(false);
-
-        save(book);
+        repository.findById(id).ifPresent(
+                book -> {
+                    book.setOwner(null);
+                    book.setTookAt(null);
+                    book.setExpired(false);
+                });
+//  save - не нужен, так как book лежит в persistence context и Hibernate знает об этом book, поэтому сам обновит сущность в бд при каждом вызове setter
+//        save(book);
     }
 }

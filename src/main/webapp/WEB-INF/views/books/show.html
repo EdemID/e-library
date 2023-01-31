@@ -33,7 +33,7 @@
 </div>
 <!--<p>has the book</p>-->
 <div th:unless="${namePerson == null}">
-    <span th:text="${namePerson}">Name person</span>
+    <span th:text="${namePerson.getName()}">Name person</span>
     <span> has the book</span>
     <div style="clear: left"></div>
 
