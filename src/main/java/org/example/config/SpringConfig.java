@@ -25,6 +25,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+//TODO: добавить во все страницы html - кнопку "Назад". а в PeopleService - validator
 
 @EnableWebMvc
 @Configuration
